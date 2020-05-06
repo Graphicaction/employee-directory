@@ -3,7 +3,7 @@ import React from 'react';
 function EmployeeList(props) {
     return (
         
-            <table class="table table-striped table-hover">
+            <table className="table table-striped table-hover">
                 <thead>
                     <tr>
                     <th>#</th>

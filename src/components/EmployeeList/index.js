@@ -3,7 +3,7 @@ import "./style.css"
 
 function EmployeeList(props) {
     return (
-        <div class="table-responsive-sm">
+        <div className="table-responsive-sm">
             <table className="table table-bordered table-dark table-striped table-hover">
                 <thead>
                     <tr>
@@ -15,6 +15,7 @@ function EmployeeList(props) {
                     <th>Gender</th>
                     <th>Department</th>
                     <th>Start Date</th>
+                    <th>Days Worked</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,6 +29,7 @@ function EmployeeList(props) {
                          <td>{employee.gender}</td>
                          <td>{employee.department}</td>
                          <td>{employee.date}</td>
+                         <td>{employee.daysWorked}</td>
                         </tr>
                     ))}
                 </tbody>

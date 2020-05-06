@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import moment from "moment";
 import EmployeeList from "../EmployeeList"
 import API from "../../utils/Apiservice";
 import Navbar from '../Navbar';
-
+ 
 class EmployeeSearch extends Component {
     //Initializing state
     state = {
@@ -21,12 +22,23 @@ class EmployeeSearch extends Component {
             const searchedEmployees = this.state.employees.filter(
                 employee => (employee.firstName.toLowerCase().includes(letters)) || (employee.lastName.toLowerCase().includes(letters))
                 );
-            // Set this.state.friends equal to the new friends array
+            // Set this.state.employees equal to the new employees array
             this.setState({ employees: searchedEmployees });
             return;
         }else {
             API.getEmployees()
-            .then(res =>this.setState({ employees: res }))
+            .then(res => {
+                // return new employee array with day's worked col  
+                const newEmployees = res.map(employee => {
+                    const startDate = moment(employee.date, 'M/D/YYYY')
+                    employee.daysWorked = `${moment().diff(startDate, 'days')} days`
+                    return employee     
+                    })
+                // )
+                return newEmployees;
+             })
+            .then(newEmployees => {
+                this.setState({ employees: newEmployees })})
             .catch(err => console.log(err));
         }
     }; 
@@ -40,37 +52,37 @@ class EmployeeSearch extends Component {
     //Search for the employees with specific letters
     handleFormSubmit = (event) => {
         event.preventDefault();
-        console.log("handleform submit: ",this.state.search);
+        //console.log("handleform submit: ",this.state.search);
         this.searchEmployees(this.state.search);
     }
     //Clear the search field and rerender all employees
     handleFormClear = (event) => {
         event.preventDefault();
         this.setState({ search: "" });
-        console.log(this.state.search);
+        // console.log(this.state.search);
         this.searchEmployees(this.state.search);
     }
     //Sorting employees by their first name or lastname
     handleSort = (name) => {
         if(name === "firstname") {
-            // Filter this.state.employees for employees whose firstname or last name includes searched letters.
+            //Sort this.state.employees by first name 
             const sortedEmployees = this.state.employees.sort(
                 (a,b) => {
                     if(a.firstName.toLowerCase() < (b.firstName.toLowerCase())) return -1;
                     if(a.firstName.toLowerCase() > (b.firstName.toLowerCase())) return 1;
                     return 0;
                 })
-            // Set this.state.friends equal to the new friends array
+            // Set this.state.employees equal to the new employees array
             this.setState({ employees: sortedEmployees });
         } else if(name === "lastname") {
-            // Filter this.state.employees for employees whose firstname or last name includes searched letters.
+            // Sort this.state.employees by last name
             const sortedEmployees = this.state.employees.sort(
                 (a,b) => {
                     if(a.lastName.toLowerCase() < (b.lastName.toLowerCase())) return -1;
                     if(a.lastName.toLowerCase() > (b.lastName.toLowerCase())) return 1;
                     return 0;
                 })
-            // Set this.state.friends equal to the new friends array
+            // Set this.state.employees equal to the new employees array
             this.setState({ employees: sortedEmployees });
         }
     }

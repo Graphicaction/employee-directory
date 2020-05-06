@@ -1,15 +1,16 @@
 import React from 'react';
+import "./style.css"
 
 function EmployeeList(props) {
     return (
-        
-            <table className="table table-striped table-hover">
+        <div class="table-responsive-sm">
+            <table className="table table-bordered table-dark table-striped table-hover">
                 <thead>
                     <tr>
-                    <th>#</th>
+                    <th>Id</th>
                     <th></th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th className= "sortHeading" onClick={() => props.handleSort("firstname")}>First Name<i className="ml-1 fa fa-sort-up"></i></th>
+                    <th className= "sortHeading" onClick={() => props.handleSort("lastname")}>Last Name<i className="ml-1 fa fa-sort-up"></i></th>
                     <th>Email</th>
                     <th>Gender</th>
                     <th>Department</th>
@@ -31,7 +32,7 @@ function EmployeeList(props) {
                     ))}
                 </tbody>
             </table>
-        
+        </div>
     );
 }
 

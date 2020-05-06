@@ -62,7 +62,17 @@ class EmployeeSearch extends Component {
                 })
             // Set this.state.friends equal to the new friends array
             this.setState({ employees: sortedEmployees });
-        } 
+        } else if(name === "lastname") {
+            // Filter this.state.employees for employees whose firstname or last name includes searched letters.
+            const sortedEmployees = this.state.employees.sort(
+                (a,b) => {
+                    if(a.lastName.toLowerCase() < (b.lastName.toLowerCase())) return -1;
+                    if(a.lastName.toLowerCase() > (b.lastName.toLowerCase())) return 1;
+                    return 0;
+                })
+            // Set this.state.friends equal to the new friends array
+            this.setState({ employees: sortedEmployees });
+        }
     }
 
     render() {

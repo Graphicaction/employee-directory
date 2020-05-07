@@ -31,10 +31,10 @@ class EmployeeSearch extends Component {
                 // return new employee array with day's worked col  
                 const newEmployees = res.map(employee => {
                     const startDate = moment(employee.date, 'M/D/YYYY')
-                    employee.daysWorked = `${moment().diff(startDate, 'days')} days`
+                    const nowDate = moment()
+                    employee.yearsWorked = nowDate.diff(startDate, 'years')
                     return employee     
                     })
-                // )
                 return newEmployees;
              })
             .then(newEmployees => {
@@ -63,8 +63,8 @@ class EmployeeSearch extends Component {
         this.searchEmployees(this.state.search);
     }
     //Sorting employees by their first name or lastname
-    handleSort = (name) => {
-        if(name === "firstname") {
+    handleSort = (category) => {
+        if(category === "firstname") {
             //Sort this.state.employees by first name 
             const sortedEmployees = this.state.employees.sort(
                 (a,b) => {
@@ -74,13 +74,20 @@ class EmployeeSearch extends Component {
                 })
             // Set this.state.employees equal to the new employees array
             this.setState({ employees: sortedEmployees });
-        } else if(name === "lastname") {
+        } else if(category === "lastname") {
             // Sort this.state.employees by last name
             const sortedEmployees = this.state.employees.sort(
                 (a,b) => {
                     if(a.lastName.toLowerCase() < (b.lastName.toLowerCase())) return -1;
                     if(a.lastName.toLowerCase() > (b.lastName.toLowerCase())) return 1;
                     return 0;
+                })
+            // Set this.state.employees equal to the new employees array
+            this.setState({ employees: sortedEmployees });
+        } else if(category === "years") {
+            // Sort this.state.employees by years
+            const sortedEmployees = this.state.employees.sort((a,b) => {
+                    return a.yearsWorked - b.yearsWorked;
                 })
             // Set this.state.employees equal to the new employees array
             this.setState({ employees: sortedEmployees });

@@ -13,7 +13,7 @@ function EmployeeList(props) {
                     <th className= "sortHeading" onClick={() => props.handleSort("lastname")}>Last Name<i className="ml-1 fa fa-sort-up"></i></th>
                     <th>Email</th>
                     <th>Gender</th>
-                    <th>Department</th>
+                    <th className= "sortHeading" onClick={() => props.handleSort("department")}>Department<i className="ml-1 fa fa-sort-up"></i></th>
                     <th>Start Date</th>
                     <th className= "sortHeading" onClick={() => props.handleSort("years")}>Years Worked<i className="ml-1 fa fa-sort-up"></i></th>
                     </tr>

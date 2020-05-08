@@ -3,11 +3,14 @@ import moment from "moment";
 import EmployeeList from "../EmployeeList"
 import API from "../../utils/Apiservice";
 import Navbar from '../Navbar';
+import validate from './validate';
+import MyModal from '../MyModal';
  
 class EmployeeSearch extends Component {
     //Initializing state
     state = {
         search: "",
+        showModal: false,
         employees: []
     };
     // When this component mounts, search employees
@@ -17,14 +20,19 @@ class EmployeeSearch extends Component {
 
     searchEmployees = (query) => {
         if(query){
-            const letters = query.toLowerCase();
-            // Filter this.state.employees for employees whose firstname or last name includes searched letters.
-            const searchedEmployees = this.state.employees.filter(
-                employee => (employee.firstName.toLowerCase().includes(letters)) || (employee.lastName.toLowerCase().includes(letters))
-                );
-            // Set this.state.employees equal to the new employees array
-            this.setState({ employees: searchedEmployees });
-            return;
+            const valid = validate(query); //Validating the input
+            if(valid){ 
+                const letters = query.toLowerCase();
+                // Filter this.state.employees for employees whose firstname or last name includes searched letters.
+                const searchedEmployees = this.state.employees.filter(
+                    employee => (employee.firstName.toLowerCase().includes(letters)) || (employee.lastName.toLowerCase().includes(letters))
+                    );
+                // Set this.state.employees equal to the new employees array
+                this.setState({ employees: searchedEmployees });
+                return;
+            } else {
+              this.setState({ showModal: true })
+            }
         }else {
             API.getEmployees()
             .then(res => {
@@ -42,6 +50,9 @@ class EmployeeSearch extends Component {
             .catch(err => console.log(err));
         }
     }; 
+    hideModal = () => {
+        this.setState({ showModal: false })
+    }
     //Changing state whenever search field changes
     handleInputChange = (event) => {
         const {name,value} = event.target;
@@ -54,15 +65,17 @@ class EmployeeSearch extends Component {
         event.preventDefault();
         //console.log("handleform submit: ",this.state.search);
         this.searchEmployees(this.state.search);
+        this.setState({ search: "" });
     }
     //Clear the search field and rerender all employees
     handleFormClear = (event) => {
-        event.preventDefault();
-        this.setState({ search: "" });
-        // console.log(this.state.search);
-        this.searchEmployees(this.state.search);
+        if(event)
+            event.preventDefault();
+        this.setState({ search: "" }, () => {
+           this.searchEmployees(this.state.search);
+        });
     }
-    //Sorting employees by their first name or lastname
+    //Sorting employees by their first name, lastname, years or department
     handleSort = (category) => {
         if(category === "firstname") {
             //Sort this.state.employees by first name 
@@ -84,10 +97,20 @@ class EmployeeSearch extends Component {
                 })
             // Set this.state.employees equal to the new employees array
             this.setState({ employees: sortedEmployees });
-        } else if(category === "years") {
+        } else if(category === "years") { 
             // Sort this.state.employees by years
             const sortedEmployees = this.state.employees.sort((a,b) => {
                     return a.yearsWorked - b.yearsWorked;
+                })
+            // Set this.state.employees equal to the new employees array
+            this.setState({ employees: sortedEmployees });
+        } else if(category === "department") {
+            // Sort this.state.employees by last name
+            const sortedEmployees = this.state.employees.sort(
+                (a,b) => {
+                    if(a.department.toLowerCase() < (b.department.toLowerCase())) return -1;
+                    if(a.department.toLowerCase() > (b.department.toLowerCase())) return 1;
+                    return 0;
                 })
             // Set this.state.employees equal to the new employees array
             this.setState({ employees: sortedEmployees });
@@ -106,6 +129,10 @@ class EmployeeSearch extends Component {
                 <EmployeeList 
                     employees = {this.state.employees}
                     handleSort={this.handleSort}
+                />
+                <MyModal 
+                showModal = {this.state.showModal} 
+                hideModal = {this.hideModal}
                 />
             </div>
         );

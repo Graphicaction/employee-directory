@@ -22,7 +22,7 @@ function Navbar(props) {
                 placeholder="Search" 
                 id="search"
                 onChange={props.handleInputChange}
-                value={props.search}
+                value={props.value}
                 name="search"
                 />
                 <button style= {styles.searchBtn} onClick={props.handleFormSubmit} className="btn btn-outline-primary my-2 my-sm-0" type="submit">

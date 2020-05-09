@@ -5,7 +5,7 @@ function EmployeeList(props) {
     return (
         <div className="table-responsive-sm">
             <table className="table table-bordered table-dark table-striped table-hover text-center">
-                <thead>
+                <thead className="tHeading">
                     <tr>
                     <th>Id</th>
                     <th></th>

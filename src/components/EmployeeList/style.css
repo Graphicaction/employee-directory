@@ -1,3 +1,6 @@
+.tHeading {
+    background-color: rgb(97, 117, 74);
+}
 .sortHeading:hover{
     cursor: pointer;
     background-color: rgb(71, 70, 67);

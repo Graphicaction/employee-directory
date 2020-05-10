@@ -17,7 +17,7 @@ class EmployeeSearch extends Component {
     componentDidMount() {
         this.searchEmployees();
     }
-
+    //Search employees
     searchEmployees = (query) => {
         if(query){
             const valid = validate(query); //Validating the input
@@ -63,7 +63,7 @@ class EmployeeSearch extends Component {
     //Search for the employees with specific letters
     handleFormSubmit = (event) => {
         event.preventDefault();
-        //console.log("handleform submit: ",this.state.search);
+        //search for the employees matching the search query
         this.searchEmployees(this.state.search);
         this.setState({ search: "" });
     }
@@ -71,6 +71,7 @@ class EmployeeSearch extends Component {
     handleFormClear = (event) => {
         if(event)
             event.preventDefault();
+        //clear search field and search all employees again
         this.setState({ search: "" }, () => {
            this.searchEmployees(this.state.search);
         });
@@ -105,7 +106,9 @@ class EmployeeSearch extends Component {
             // Set this.state.employees equal to the new employees array
             this.setState({ employees: sortedEmployees });
         } else if(category === "department") {
-            // Sort this.state.employees by last name
+            category = category.value;
+            console.log(this.state.employees[0].category);
+            // Sort this.state.employees by department
             const sortedEmployees = this.state.employees.sort(
                 (a,b) => {
                     if(a.department.toLowerCase() < (b.department.toLowerCase())) return -1;

@@ -4,19 +4,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function MyModal(props) {
     const [isOpen, setIsOpen] = useState(false);
-
+    //hide modal when user presses OK
     const hideModal = () => {
         setIsOpen(false);
         props.hideModal();
       };
-      // When this component mounts, search employees
+    // When this component mounts, set isOpen variable accordingly
     useEffect(()=> {
         if(props.showModal)
             setIsOpen(true);
         else 
             setIsOpen(false);        
     },[props.showModal]);
-
+    //Render Modal
     return(
         <Modal show={isOpen} onHide={hideModal}>
             <Modal.Header>

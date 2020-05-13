@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.css"],"names":[],"mappings":"AAAA,UACI,wBACJ,CACA,mBACI,cAAe,CACf,wBACJ","file":"main.74e0e51f.chunk.css","sourcesContent":[".tHeading {\r\n    background-color: rgb(97, 117, 74);\r\n}\r\n.sortHeading:hover{\r\n    cursor: pointer;\r\n    background-color: rgb(71, 70, 67);\r\n}"]}

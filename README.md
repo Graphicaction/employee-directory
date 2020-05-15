@@ -4,6 +4,7 @@
 ## Table of contents:
 -   [ Description ](#description)
 -   [ Installation ](#installation)
+-   [ Deployed Link ](#deploy)
 -   [ Usage ](#usage)
 -   [ Test ](#test)
 -   [ License ](#license)
@@ -16,6 +17,11 @@
 ```bash
     npm i
 ```
+
+## <a name="deploy"></a>Deployed Link:
+
+https://graphicaction.github.io/employee-directory/
+
 ## <a name="usage"></a>Usage:
 ```bash
     npm start 

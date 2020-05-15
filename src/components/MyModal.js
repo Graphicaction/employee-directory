@@ -22,7 +22,7 @@ export default function MyModal(props) {
             <Modal.Header>
             <Modal.Title>Hi</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Please enter valid characters!</Modal.Body>
+            <Modal.Body>Please enter letters only!</Modal.Body>
             <Modal.Footer>
             <button onClick={hideModal}>Ok</button>
             </Modal.Footer>

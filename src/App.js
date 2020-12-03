@@ -28,15 +28,21 @@ function App() {
     window.parent.postMessage(payload, "*");
   };
 
-  const handleIncomingMessage = (event) => {
-    console.log(event.data);
-    setMessage(JSON.stringify(event.data));
-  };
+  // const handleIncomingMessage = (event) => {
+  //   console.log(event.data);
+  //   setMessage(JSON.stringify(event.data));
+  // };
 
   React.useEffect(() => {
-    window.addEventListener("message", handleIncomingMessage);
-    return () => window.removeEventListener("message", handleIncomingMessage)
-  }, [handleIncomingMessage]);
+    window.addEventListener("message", (event) => {
+      console.log(event.data);
+      setMessage(JSON.stringify(event.data));
+    });
+    return () => window.removeEventListener("message", (event) => {
+      console.log(event.data);
+      setMessage(JSON.stringify(event.data));
+    })
+  }, []);
 
   return (
     <div className="App">

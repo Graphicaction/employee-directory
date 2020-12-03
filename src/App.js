@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 function App() {
   const [message, setMessage] =  React.useState();
@@ -28,24 +28,18 @@ function App() {
     window.parent.postMessage(payload, "*");
   };
 
-  // const handleIncomingMessage = (event) => {
-  //   console.log(event.data);
-  //   setMessage(JSON.stringify(event.data));
-  // };
+  const handleIncomingMessage = useCallback((event) => {
+    console.log(event.data);
+    setMessage(JSON.stringify(event.data));
+  },[]);
 
   React.useEffect(() => {
-    window.addEventListener("message", (event) => {
-      console.log(event.data);
-      setMessage(JSON.stringify(event.data));
-    });
-    return () => window.removeEventListener("message", (event) => {
-      console.log(event.data);
-      setMessage(JSON.stringify(event.data));
-    })
-  }, []);
+    window.addEventListener("message", handleIncomingMessage);
+    return () => window.removeEventListener("message", handleIncomingMessage)
+  },[handleIncomingMessage]);
 
   return (
-    <div className="App">
+    <div className="App container">
       <header className="App-header">
         <button onClick={sendUserInfoMessage}>
           Click to send user-info message
